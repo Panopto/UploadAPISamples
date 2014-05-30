@@ -1,0 +1,50 @@
+<html>
+<head>
+    <title>Sample Multipart Upload Client</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script type="text/javascript" src="MultipartUploadClient.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var activeFile;
+            $("#filePicker").on('change', function (evt) {
+                activeFile = evt.target.files[0];
+            });
+            $("#targetUri").val("http://localhost/Panopto/Upload/uploadClient/");
+            $("#upload").click(function() {
+                if (activeFile) {
+                    var consoleDiv = $('#console')[0]; // get the only console element
+                    while (consoleDiv.firstChild) {
+                        consoleDiv.removeChild(consoleDiv.firstChild);
+                    }
+
+                    Panopto.MultipartUpload.uploadFile(
+                        $('#targetUri').val(),                  // targetUri
+                        activeFile,                             // file
+                        $('#chunkSize').val() * 1024 * 1024,    // slice size in MB
+                        function() { alert('success'); },       // success
+                        function(httpStatus, xml, headers) {    // failure
+                            alert('failure: ' + httpStatus);
+                        },
+                        function(msg) {                         // update
+                            consoleDiv.appendChild(document.createTextNode(msg));
+                            consoleDiv.appendChild(document.createElement('br'));
+                        });
+                }
+                else {
+                    alert("Select a file");
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    target uri: <input type="text" id="targetUri" size="60" />
+    <br>
+    <input type="file" id="filePicker" />
+    <br>
+    chunk size (MB) <input id="chunkSize" type="number" min=5 max=(5*1024) step=5 value=5 />
+    <button id="upload">upload file</button>
+    <br>
+    <div id="console"></div>
+</body>
+</html>
