@@ -15,12 +15,12 @@ It's helpful to install the packages to the same local directory in which Multip
 
 To invoke MultipartNodeUploadAPI.js, call 'node MultipartNodeUploadAPI.js', optionally with arguments.
 The arguments, with defaults, are listed in order near the top of the file.
-Some of the defauls are examples, so change them to meaninful defaults as desired.
+Some of the defauls are examples, so change them to meaningful defaults as desired.
 
 MultipartNodeUploadAPI.js logs into the specified site, creates a new session under the specified folder.
 It then uploads a single specified file to that session and queues it for processing.
 It is possible to upload any number of files to any session. That session might already exist.
-Consider this as an example of the simplest possible complete use case.
+Consider this file as an example of the simplest possible complete use case.
 
 The upload sequence might fail for any number of reasons:
 authentication problems, unacceptable file formats, internet latency, etc.
