@@ -50,3 +50,6 @@ The process can be reattempted as many times as desired in the event of any erro
 
 In order to queue processing of the newly uploaded file(s), call the API to signal the upload is complete.
 See the node sample or API documentation for how to do this.
+
+Most browsers will respect cross-domain restrictions, so ideally this page should be served by the Panopto server itself.
+The node example explicitly ignores cross-domain restrictions.
