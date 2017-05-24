@@ -72,7 +72,7 @@ Panopto.testUploadAPI = (function () {
     // Get login cookie from server
     var getAuthCookie = function (onComplete) {
         request({
-            url: host + "/Panopto/PublicAPISSL/4.2/Auth.svc",
+            url: host + "/Panopto/PublicAPI/4.2/Auth.svc",
             headers: soapHeaders,
             method: 'POST',
             rejectUnauthorized: rejectBadCerts,
@@ -286,14 +286,19 @@ Panopto.testUploadAPI = (function () {
             var fullUri = [targetUri, "/", fileName, "?uploadId=", uploadId].join('');
 
             // prepare eTag xml; eTags array is 1-based
+            // eTag may have double quotation marks and those should be escaped.
             for (var index = 1; index < eTags.length; index++) {
-                eTags[index] = ['<Part><PartNumber>', index, '</PartNumber><ETag>', eTags[index], '</ETag></Part>'].join('');
+                eTags[index] = ['<Part><PartNumber>',
+                                index,
+                                '</PartNumber><ETag>',
+                                eTags[index].replace(/"/g, '&quot;'),
+                                '</ETag></Part>'].join('');
             }
 
             request({
                 url: fullUri,
                 method: 'POST',
-                json: true,
+                json: false,
                 rejectUnauthorized: rejectBadCerts,
                 body: ['<CompleteMultipartUpload>', eTags.join(''), '</CompleteMultipartUpload>'].join(''),
             },
