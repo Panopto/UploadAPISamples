@@ -286,13 +286,8 @@ Panopto.testUploadAPI = (function () {
             var fullUri = [targetUri, "/", fileName, "?uploadId=", uploadId].join('');
 
             // prepare eTag xml; eTags array is 1-based
-            // eTag may have double quotation marks and those should be escaped.
             for (var index = 1; index < eTags.length; index++) {
-                eTags[index] = ['<Part><PartNumber>',
-                                index,
-                                '</PartNumber><ETag>',
-                                eTags[index].replace(/"/g, '&quot;'),
-                                '</ETag></Part>'].join('');
+                eTags[index] = ['<Part><PartNumber>', index, '</PartNumber><ETag>', eTags[index], '</ETag></Part>'].join('');
             }
 
             request({
