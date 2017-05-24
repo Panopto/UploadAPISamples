@@ -72,7 +72,7 @@ Panopto.testUploadAPI = (function () {
     // Get login cookie from server
     var getAuthCookie = function (onComplete) {
         request({
-            url: host + "/Panopto/PublicAPISSL/4.2/Auth.svc",
+            url: host + "/Panopto/PublicAPI/4.2/Auth.svc",
             headers: soapHeaders,
             method: 'POST',
             rejectUnauthorized: rejectBadCerts,
@@ -293,7 +293,7 @@ Panopto.testUploadAPI = (function () {
             request({
                 url: fullUri,
                 method: 'POST',
-                json: true,
+                json: false,
                 rejectUnauthorized: rejectBadCerts,
                 body: ['<CompleteMultipartUpload>', eTags.join(''), '</CompleteMultipartUpload>'].join(''),
             },
